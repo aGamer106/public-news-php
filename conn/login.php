@@ -1,5 +1,7 @@
 <?php
-require_once '../conn/dbh.php';
+
+require_once 'dbh.php';
+
 class login extends dbh
 {
     protected function getUserInfoByUsername($email)

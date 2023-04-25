@@ -13,7 +13,7 @@ if (isset($_POST['login'])) {
     $password = $_POST['password'];
 
     // Instantiate Class
-    include_once 'conn/login.php';
+    include_once 'login.php';
     include_once 'controller/loginController.php';
     $login = new loginController($email, $password);
 
@@ -58,13 +58,13 @@ include_once 'components/navbar.php';
             <form method="POST">
                 <div class="form-group">
                     <label for="email">Email Address</label>
-                    <input type="text" class="form-control" placeholder="Email Address" name="email">
+                    <input type="email" class="form-control" placeholder="Email Address" name="email">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" class="form-control" placeholder="Password" name="password">
                 </div>
-                <button type="submit" class="btn btn-black">Login</button>
+                <button type="submit" class="btn btn-black" name="login">Login</button>
             </form>
         </div>
     </div>

@@ -1,5 +1,5 @@
 <?php
-include_once 'login.php';
+include_once 'conn/login.php';
 
 
 class loginController extends login
@@ -31,15 +31,15 @@ class loginController extends login
         }
 
         // Verify password matches
-        $hashed_password = hash('sha256', $this->password . $result['salt']);
-        if ($hashed_password != $result['password']) {
+        if (!password_verify($this->password, $result['password'])) {
             $_SESSION['error'] = 'Username or password is wrong';
-            return false;
+            header('location: login.php');
+            exit();
         }
-
         // If all checks pass, set the logged_on session variable and return true
         $_SESSION['logged_on'] = true;
-        return true;
+        header('Location: login_success.php');
+        exit();
     }
 
 }
