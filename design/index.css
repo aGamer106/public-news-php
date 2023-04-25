@@ -1,0 +1,40 @@
+body {
+    padding-top: 90px;
+
+}
+
+#api-title {
+    text-align: center;
+    font-family: "Times New Roman", sans-serif;
+    text-decoration: none;
+    color: #ffffff;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    font-weight: bold;
+    font-size: 64px;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 16px;
+    overflow: hidden;
+}
+
+.carrdd-api {
+    max-width: 300px;
+    min-width: 250px;
+    transition: transform .5s ease;
+    position: relative;
+}
+
+.carrdd-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 16px;
+}
+
+.card-action-button {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+}
