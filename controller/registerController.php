@@ -27,7 +27,7 @@ class registerController extends register
         $this->registerUser($this->userid, $this->email, $this->firstName, $this->lastName, $passwordHash);
 
         // Redirect if successful
-        header('Location: register_success.php');
+        header('Location: login.php');
         exit();
     }
 }

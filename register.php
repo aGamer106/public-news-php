@@ -25,7 +25,7 @@ if (isset($_POST['register'])) {
     $register->register();
 
     // Redirect if successful
-    header('Location: register_success.php');
+    header('Location: login.php');
 }
 
 include_once 'components/navbar.php';
