@@ -45,16 +45,19 @@ class loginController extends login
                 // Redirect to user home page
 //                header('Location: user_home.php');
                 header('Location: login_success.php');
+                $_SESSION['user_type'] = $result['user_type'];
                 break;
             case 'journalist':
                 // Redirect to journalist home page
 //                header('Location: journalist_home.php');
                 header('Location: login_success.php');
+                $_SESSION['user_type'] = $result['user_type'];
                 break;
             case 'admin':
                 // Redirect to admin home page
 //                header('Location: admin_home.php');
                 header('Location: login_success.php');
+                $_SESSION['user_type'] = $result['user_type'];
                 break;
             default:
                 // If the user role is not recognized, redirect to login page
