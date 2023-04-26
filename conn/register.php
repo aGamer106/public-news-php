@@ -19,4 +19,6 @@ class register extends  dbh
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$userid, $email, $firstName, $lastName, $password]);
     }
+
+
 }
