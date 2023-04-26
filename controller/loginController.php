@@ -36,10 +36,35 @@ class loginController extends login
             header('location: login.php');
             exit();
         }
-        // If all checks pass, set the logged_on session variable and return true
+        // If all checks pass, set the logged_on and first_name session variables and return true
         $_SESSION['logged_on'] = true;
+        $_SESSION['first_name'] = $result['first_name'];
+
+        switch ($result['user_type']) {
+            case 'user':
+                // Redirect to user home page
+//                header('Location: user_home.php');
+                header('Location: login_success.php');
+                break;
+            case 'journalist':
+                // Redirect to journalist home page
+//                header('Location: journalist_home.php');
+                header('Location: login_success.php');
+                break;
+            case 'admin':
+                // Redirect to admin home page
+//                header('Location: admin_home.php');
+                header('Location: login_success.php');
+                break;
+            default:
+                // If the user role is not recognized, redirect to login page
+                header('Location: login.php');
+                break;
+        }
+
         header('Location: login_success.php');
         exit();
+
     }
 
 }
