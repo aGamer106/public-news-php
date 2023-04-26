@@ -3,11 +3,6 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-if (isset($_SESSION['logged_on']) && $_SESSION['logged_on'] == true) {
-    echo 'Welcome, ' . $_SESSION['first_name'];
-} else {
-    echo '<a href="login.php">Log in</a>';
-}
 ?>
 
 <nav>
@@ -15,13 +10,13 @@ if (isset($_SESSION['logged_on']) && $_SESSION['logged_on'] == true) {
     <div class="navbar-container">
         <h1 class="title">The Tavern Times</h1>
         <div class="menu">
-            <a href="index.php">Home</a>
-            <a href="news.php">News</a>
             <?php if(isset($_SESSION['logged_on'])) { ?>
                 <a href="#"><?php echo "Hello, ".$_SESSION['first_name']; ?></a>
+                <a href="news.php">News</a>
                 <a href="profile.php">Profile</a>
                 <a href="logout.php">Logout</a>
             <?php } else { ?>
+                <a href="index.php">Home</a>
                 <a href="login.php">Login</a>
                 <a href="register.php">Register</a>
             <?php } ?>
