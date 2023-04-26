@@ -1,13 +1,14 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 if (isset($_SESSION['logged_on']) && $_SESSION['logged_on'] == true) {
     echo 'Welcome, ' . $_SESSION['first_name'];
 } else {
     echo '<a href="login.php">Log in</a>';
 }
 ?>
-
-
 
 <nav>
     <link rel="stylesheet" href="design/navbar.css" />
