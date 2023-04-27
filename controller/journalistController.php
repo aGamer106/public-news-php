@@ -27,5 +27,10 @@ class journalistController extends  journalist
         exit();
     }
 
+    public function getJournalistInfo($email)
+    {
+        return $this->getJournalistInfoByUsername($email);
+    }
+
 
 }

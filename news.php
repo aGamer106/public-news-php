@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 // Check if user is logged in
@@ -7,15 +8,19 @@ if (!isset($_SESSION['logged_on'])) {
     exit();
 }
 
-// Check if user is a journalist
-if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'journalist') {
-    header("Location: index.php");
-    exit();
-}
+$userid = $_SESSION['userid'];
+$user_type = $_SESSION['user_type'];
 
+require_once 'conn/article.php';
 require_once 'controller/articleController.php';
 $article = new articleController();
 $articles = $article->getArticles();
+
+require_once 'conn/user.php';
+require_once 'controller/userController.php';
+$user = new userController();
+$userData = $user->getUserByID($userid);
+$subscriptionStatus = $user->checkSubscriptionStatus($userid);
 
 require_once 'components/navbar.php';
 ?>
@@ -37,27 +42,29 @@ require_once 'components/navbar.php';
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h1>Read your favourite news</h1>
-<div class="container">
-    <div class="row">
-        <?php foreach ($articles as $article): ?>
-            <div class="col-sm-12 col-md-6 col-lg-4 my-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title"><?= $article['title'] ?></h5>
-                        <p class="card-text"><?= $article['description'] ?></p>
-                        <p class="card-text"><small class="text-muted">Written by: <?= $article['first_name'] ?> <?= $article['last_name'] ?></small></p>
+<?php if ($subscriptionStatus['subscription_status'] == 0 && $user_type != 'journalist'): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        You do not have a subscription to access all articles. Please <a href="pay.php">purchase</a> a subscription to have full access.
+        <!--        <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+        <!--            <span aria-hidden="true">&times;</span>-->
+        <!--        </button>-->
+    </div>
+<?php else: ?>
+    <h1>Read your favourite news</h1>
+    <div class="container">
+        <div class="row">
+            <?php foreach ($articles as $article): ?>
+                <div class="col-sm-12 col-md-6 col-lg-4 my-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="article.php?articleid=<?= $article['articleid'] ?>"><?= $article['title'] ?></a></h5>
+                            <p class="card-text"><?= $article['description'] ?></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
+        </div>
     </div>
-</div>
-
-<div class="write">
-    <button type="button" class="btn btn-warning">Write Article</button>
-</div>
-
+<?php endif; ?>
 </body>
 </html>
-

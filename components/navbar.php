@@ -11,9 +11,9 @@ if (session_status() == PHP_SESSION_NONE) {
         <h1 class="title">The Tavern Times</h1>
         <div class="menu">
             <?php if(isset($_SESSION['logged_on'])) { ?>
-                <a href="#"><?php echo "Hello, ".$_SESSION['first_name']; ?></a>
+                <a href="index.php"><?php echo "Hello, ".$_SESSION['first_name']; ?></a>
                 <a href="news.php">News</a>
-                <a href="profile.php">Profile</a>
+<!--                <a href="profile.php">Profile</a>-->
                 <a href="logout.php">Logout</a>
             <?php } else { ?>
                 <a href="index.php">Home</a>

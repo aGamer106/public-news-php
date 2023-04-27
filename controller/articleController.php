@@ -2,23 +2,31 @@
 
 include_once 'conn/article.php';
 
-class articleController extends article
+class articleController extends Article
 {
-
-    private $article;
-
-    public function __construct() {
-        $this->article = new article();
+    public function getArticles()
+    {
+        return $this->getAllArticles();
     }
 
-    public function getArticles() {
-        return $this->article->getAllArticles();
+    public function uploadArticle($title, $description)
+    {
+        $this->uploadArticle($title, $description);
     }
 
-    public function uploadArticle($title, $description, $authorid) {
-        $this->article->uploadArticle($title, $description, $authorid);
+    public function getArticleWithId($articleId)
+    {
+        return $this->getArticleById($articleId);
     }
 
-
-
+    public function incrementArticlesReadByUserToday($userId, $articleId)
+    {
+        $readCount = $this->getArticlesReadCountByUserToday($userId);
+        if ($readCount >= 3) {
+            // User has exceeded free read limit, redirect to subscription page
+            header('Location: get_subscription.php');
+            exit();
+        }
+        $this->incrementArticlesReadByUserToday($userId, $articleId);
+    }
 }

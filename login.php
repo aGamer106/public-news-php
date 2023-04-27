@@ -1,31 +1,57 @@
 <?php
-
 // Start the session
 session_start();
-// Only none logged on user can view this page
+
+// Only non-logged on user can view this page
 if (isset($_SESSION['logged_on'])) {
-    header('location: index.php');
+header('location: index.php');
+exit();
 }
+
 // Check if user reached by POST method
 if (isset($_POST['login'])) {
-    // Grab data
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+// Grab data
+$email = $_POST['email'];
+$password = $_POST['password'];
+$firstName = $_SESSION['firstName'];
+$lastName = $_SESSION['lastName'];
 
-    // Instantiate Class
-    include_once 'login.php';
-    include_once 'controller/loginController.php';
-    $login = new loginController($email, $password);
+// Instantiate Login Controller
+include_once 'controller/loginController.php';
+$login = new loginController($email, $password);
 
-    // Check login and redirect if successful
-    if ($login->login()) {
-        header('location: login_success.php');
+// Check login and redirect if successful
+if ($login->login()) {
+// Check user type and store additional data for journalists
+    switch ($_SESSION['user_type']) {
+        case 'journalist':
+            // Get journalist information and store in session
+            include_once 'controller/journalistController.php';
+            $journalistController = new journalistController($email, $firstName, $lastName, $password);
+            $journalistInfo = $journalistController->getJournalistInfo($email);
+            $_SESSION['authorid'] = $journalistInfo['authorid'];
+            $_SESSION['email'] = $journalistInfo['email'];
+            $_SESSION['firstName'] = $journalistInfo['firstName'];
+            $_SESSION['lastName'] = $journalistInfo['lastName'];
+            break;
+        // Other user types don't require additional data to be stored
+        default:
+            break;
+    }
+
+    // Redirect to login success page
+    header('location: login_success.php');
+    exit();
+    } else {
+        // If login failed, display error message and stay on login page
+        $_SESSION['error'] = 'Username or password is wrong';
+        header('location: login.php');
         exit();
     }
 }
 
-include_once 'components/navbar.php';
-?>
+// Include navbar on page
+include_once 'components/navbar.php';?>
 
 <!doctype html>
 <html lang="en">

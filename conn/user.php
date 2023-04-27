@@ -19,4 +19,22 @@ class user extends dbh
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$email, $_SESSION['userID']]);
     }
+
+    public function checkSubscriptionStatus($userid) {
+        $sql = "SELECT subscription_status FROM `user` WHERE `userid` = :userid";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->bindParam(':userid', $userid);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        return $result;
+    }
+
+    protected function updateSubscription($email) {
+        $sql = "UPDATE `user` SET `subscription_status` = 1 WHERE `email` = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$email]);
+    }
+
+
+
 }

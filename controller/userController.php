@@ -4,6 +4,11 @@ include_once 'conn/user.php';
 
 class userController extends user
 {
+
+    public function getSubscription($email) {
+        $this->updateSubscription($email);
+    }
+
     public function update($email, $password)
     {
         // Get user detail
